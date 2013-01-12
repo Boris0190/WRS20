@@ -11,7 +11,7 @@ namespace WRS20_Logic.HTTPCommands
     public abstract class HTTPCommand
     {
         public String uri;
-        public Guid secret = Guid.Empty;
+        //public Guid secret = Guid.Empty;
         protected String name;
         protected String paramString;
         public delegate void JsonAsyncCallback(String result);
@@ -20,13 +20,15 @@ namespace WRS20_Logic.HTTPCommands
 
         public String SendCommand()
         {
-            return jsonString.getString(uri + name + "?" + (secret != Guid.Empty ? ("secret=" + secret.ToString() + "&") : "") + paramString);
+            //return jsonString.getString(uri + name + "?" + (secret != Guid.Empty ? ("secret=" + secret.ToString() + "&") : "") + paramString);
+            return jsonString.getString(uri + name + "?" + paramString);
         }
 
         public void SendCommandAsync(JsonAsyncCallback jCallback)
         {
             jb = jCallback;
-            String qryString = uri + name + "?" + (secret != Guid.Empty ? ("secret=" + secret.ToString() + "&") : "") + paramString;
+            //String qryString = uri + name + "?" + (secret != Guid.Empty ? ("secret=" + secret.ToString() + "&") : "") + paramString;
+            String qryString = uri + name + "?" + paramString;
 
             request = (HttpWebRequest)HttpWebRequest.Create(qryString);
             IAsyncResult result = (IAsyncResult)request.BeginGetResponse(RespCallback, null);

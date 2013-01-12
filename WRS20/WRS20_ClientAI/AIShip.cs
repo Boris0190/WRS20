@@ -13,9 +13,29 @@ namespace WRS20_ClientAI
 {
     public class AIShip
     {
-        public String uri;
-        public Guid teamPrivateKey;
+        private static int currentID = 0;
+        public static int CurrentID
+        {
+            get { return AIShip.currentID++; }
+        }
 
+        private String uri;
+        public String Uri
+        {
+            get { return uri; }
+        }
+
+        private Guid teamPrivateKey;
+        public Guid TeamPrivateKey
+        {
+            get { return teamPrivateKey; }
+        }
+
+        private JSpawn spawn;
+        public JSpawn Spawn
+        {
+            get { return spawn; }
+        }
 
         private JConfiguration config;
         public JConfiguration Config
@@ -37,28 +57,37 @@ namespace WRS20_ClientAI
         private AIAction currMoveAction;
         private AIAction currShootAction;
 
+        System.Timers.Timer radarTimer;
+
         public AIShip(String uri, Guid teamPrivateKey, JConfiguration config)
         {
+            String shipName = "Kittay!" + CurrentID.ToString();
             this.uri = uri;
             this.teamPrivateKey = teamPrivateKey;
             this.config = config;
 
+            CSpawn cSpawn = new CSpawn();
+            cSpawn.uri = uri;
+            cSpawn.ShipName = shipName;
+            cSpawn.TeamPrivateKey = teamPrivateKey;
+            spawn = new JSpawn(cSpawn.SendCommand());
+
+
             currRadarCommand = new CRadar();
             currRadarCommand.uri = uri;
-            currRadarCommand.secret = secret;
+            currRadarCommand.ShipPrivateKey = spawn.ShipPrivateKey;
 
-            Task.Factory.StartNew(() => doRadarTask(), TaskCreationOptions.LongRunning);
+            radarTimer.Interval = config.MinRadarInterval + 10; //todo +10 ist unsauber. evtl iwie anders machen
+            radarTimer.Elapsed += radarTimer_Elapsed;
+            radarTimer.Start();
         }
 
-        private void doRadarTask()
+        void radarTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            while (true)
-            {
-                JRadar newRadarQry = new JRadar(currRadarCommand.SendCommand());
-                if (newRadarQry.IsValid) currRadarResult = newRadarQry;
-                Thread.Sleep(config.MinRadarInterval);
-            }
+            JRadar newRadarQry = new JRadar(currRadarCommand.SendCommand());
+            if (newRadarQry.IsValid) currRadarResult = newRadarQry;
         }
+
 
         public void Think()
         {

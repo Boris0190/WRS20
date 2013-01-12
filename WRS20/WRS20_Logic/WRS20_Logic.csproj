@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,7 +51,7 @@
     <Compile Include="HTTPCommands\CSpawn.cs" />
     <Compile Include="HTTPCommands\CTeam.cs" />
     <Compile Include="HTTPCommands\HTTPCommand.cs" />
-    <Compile Include="JsonObjects\CSpawn.cs" />
+    <Compile Include="JsonObjects\JSpawn.cs" />
     <Compile Include="JsonObjects\JClient.cs" />
     <Compile Include="JsonObjects\JConfiguration.cs" />
     <Compile Include="JsonObjects\JDump.cs" />
@@ -63,6 +63,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="WRS_SpectatingClient.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

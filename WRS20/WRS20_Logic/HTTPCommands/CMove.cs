@@ -7,24 +7,35 @@ namespace WRS20_Logic.HTTPCommands
 {
     public class CMove : HTTPCommand
     {
-        private double dx=0;
-        public double Dx
+        private Guid shipPrivateKey;
+        public Guid ShipPrivateKey
         {
-            get { return dx; }
-            set 
+            get { return shipPrivateKey; }
+            set
             {
-                dx = value;
+                shipPrivateKey = value;
                 CalculateParamString();
             }
         }
-        private double dy = 0;
-        public double Dy
+
+        private double shipDesiredDx = 0;
+        public double ShipDesiredDx
         {
-            get { return dy; }
-            set 
+            get { return shipDesiredDx; }
+            set
             {
-                dy = value;
-                CalculateParamString(); 
+                shipDesiredDx = value;
+                CalculateParamString();
+            }
+        }
+        private double shipDesiredDy = 0;
+        public double ShipDesiredDy
+        {
+            get { return shipDesiredDy; }
+            set
+            {
+                shipDesiredDy = value;
+                CalculateParamString();
             }
         }
 
@@ -36,7 +47,7 @@ namespace WRS20_Logic.HTTPCommands
 
         public override void CalculateParamString()
         {
-            paramString = "dx=" + dx.ToString() + "&dy=" + dy.ToString();
+            paramString = "ship-private-key=" + shipPrivateKey.ToString() + "&ship-desired-dx=" + shipDesiredDx.ToString() + "&ship-desired-dy=" + shipDesiredDy.ToString();
         }
     }
 }

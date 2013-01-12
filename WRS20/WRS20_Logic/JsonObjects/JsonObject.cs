@@ -27,12 +27,12 @@ namespace WRS20_Logic.JsonObjects
                 isValid = false;
                 return;
             }
-            //try
+            try
             {
                 parseObjects();
                 isValid = true;
             }
-            //catch { throw new Exception("Debug: invalid Json String?"); }
+            catch { throw new Exception("Debug: invalid Json String?"); }
         }
 
         protected abstract void parseObjects();

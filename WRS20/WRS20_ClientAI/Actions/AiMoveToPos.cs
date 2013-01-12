@@ -53,9 +53,9 @@ namespace WRS20_ClientAI.Actions
 
             CMove move = new CMove();
             move.uri = Host.CurrRadarCommand.uri;
-            move.secret = Host.CurrRadarCommand.secret;
-            move.Dx = dx;
-            move.Dy = dy;
+            move.ShipPrivateKey = Host.CurrRadarCommand.ShipPrivateKey;
+            move.ShipDesiredDx = dx;
+            move.ShipDesiredDy = dy;
 
 
             move.SendCommandAsync(null);
